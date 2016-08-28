@@ -19,11 +19,19 @@ class UserService {
     }
   }
 
-  def updateUser(user: User): Future[User] = ???
+  def updateUser(user: User): Future[User] = Future.fromTry {
+    Thread.sleep(2000)
+    if (users.exists(u => u.username == user.username && u.id != user.id))
+      Failure(UserAlreadyExistsException(s"Username: ${user.username} is not available!"))
+    else {
+      user +: users.filterNot(_.id == user.id)
+      Success(user)
+    }
+  }
 
   def addUser(user: User): Future[User] = Future.fromTry {
     if (users.exists(_.username == user.username))
-      Failure(UserAlreadyExists(s"User with ${user.username} username already exists"))
+      Failure(UserAlreadyExistsException(s"User with username: ${user.username} already exists!"))
     else {
       users :+= user
       Success(user)
