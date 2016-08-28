@@ -24,7 +24,7 @@ class UserServiceSpec extends AsyncWordSpecLike with Matchers {
     }
 
     "return UserNotFoundException" when {
-      "the user not exists" in {
+      "the user does not exist" in {
         val id = "1"
 
         recoverToSucceededIf[UserNotFoundException](userService.findUser(id))
