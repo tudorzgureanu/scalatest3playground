@@ -32,7 +32,7 @@ class UserServiceSpec extends AsyncWordSpecLike with Matchers {
     }
 
     "return UserAlreadyExistsException" when {
-      "adding a user with an existing username" in {
+      "adding an user with an existing username" in {
         val username = "johndoe"
         val user = User("12345", username, 25)
 
